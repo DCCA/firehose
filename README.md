@@ -4,27 +4,41 @@
 
 Firehose is a lightweight, spec-driven workflow that keeps AI coding agents aligned with your intent. It treats project documentation as a first-class source of truth, ensuring every change is traceable, reviewable, and reversible.
 
+## 🧭 What This Is
+
+### 🔥 Firehose (the method)
+
+A workflow you can apply to **any** software repository to keep planning and implementation aligned.
+
+### 📦 This repository
+
+The canonical Firehose docs and reference setup:
+- `FIREHOSE.md` (operating principles)
+- `README.md` (how to adopt and use Firehose)
+- Optional `.docs/` scaffold patterns for real projects
+
 ---
 
 ## ⚡ Quick Start
 
-**Want to try Firehose?** Choose your path:
+**🚀 Fastest path (works for new or existing projects):**
 
-- **🆕 New project?** Clone this repo as a template (see [Getting Started](#-getting-started))
-- **📦 Existing project?** Add Firehose in 30 seconds:
+Use this when you want to adopt **the Firehose method in another repo**.
 
 ```bash
-# Add Firehose to your existing project
-mkdir -p .docs/{todo,doing,done}
-curl -o FIREHOSE.md https://raw.githubusercontent.com/DCCA/firehose/main/FIREHOSE.md
+# 1) 📜 Add Firehose principles to your repo root
+curl -fsSL https://raw.githubusercontent.com/DCCA/firehose/main/FIREHOSE.md -o FIREHOSE.md
 
-# Create your first change
-mkdir -p .docs/doing/my-feature && cd .docs/doing/my-feature
-echo "## Intent\nSolve X problem..." > proposal.md
-echo "## Tasks\n- [ ] 1.1 First task..." > tasks.md
-
-# Point your AI agent to FIREHOSE.md and start building!
+# 2) 🤖 Ask your AI agent to scaffold docs + your first change
+# Prompt example:
+# "Read FIREHOSE.md and create .docs/{todo,doing,done},
+# .docs/PRD.md, and .docs/doing/my-first-change/
+# with proposal.md, spec.md, design.md, and tasks.md."
 ```
+
+Then ask your AI agent to read `FIREHOSE.md` before making changes. 🤖
+
+If you're using this repo directly, Step 2 is already done. ✅
 
 ---
 
@@ -67,6 +81,8 @@ Firehose follows an **OpenSpec-lite** model—practical, not prescriptive:
 
 ## 📁 Project Structure
 
+This is the **recommended structure inside a project using Firehose**:
+
 ```text
 .
 ├── README.md                    # You are here
@@ -78,203 +94,12 @@ Firehose follows an **OpenSpec-lite** model—practical, not prescriptive:
     └── done/                    # ✅ Completed changes with history
 ```
 
-**Important:** `.docs/` should be committed to git. Ignore only ephemeral paths like `.docs/tmp/` or `.docs/.cache/`.
 
-## 🔄 Change Lifecycle
-
-For each non-trivial change, create one folder under `.docs/doing/<change-name>/`:
-
-```text
-.docs/doing/add-user-auth/
-├── proposal.md   # 🎯 Why + scope
-├── spec.md       # 📋 Requirements + scenarios (what)
-├── design.md     # 🏗️ Technical approach (how)
-└── tasks.md      # ✅ Implementation checklist
-```
-
-### 1️⃣ Proposal (`proposal.md`)
-
-**Define the "why":**
-- Intent (problem/opportunity)
-- In-scope vs out-of-scope
-- Constraints and risks
-
-<details>
-<summary>📄 Example Proposal</summary>
-
-```markdown
-## Intent
-Add JWT-based authentication to protect admin endpoints.
-
-## In-Scope
-- Login endpoint with email/password
-- JWT token generation
-- Middleware to verify tokens
-
-## Out-of-Scope
-- Password reset flow (separate change)
-- OAuth providers (future consideration)
-
-## Constraints
-- Must work with existing user database
-- Tokens expire after 24 hours
-```
-</details>
-
-### 2️⃣ Spec (`spec.md`)
-
-**Write testable requirements** using RFC 2119 language (`MUST`, `SHALL`, `SHOULD`, `MAY`):
-
-<details>
-<summary>📄 Example Spec</summary>
-
-```markdown
-### Requirement: Authentication Endpoint
-The system SHALL provide a POST /auth/login endpoint.
-
-#### Scenario: Successful Login
-- GIVEN a valid user exists with email "test@example.com"
-- WHEN I POST credentials to /auth/login
-- THEN I receive a valid JWT token
-- AND the token expires in 24 hours
-
-#### Scenario: Invalid Credentials
-- GIVEN invalid credentials
-- WHEN I POST to /auth/login
-- THEN I receive a 401 Unauthorized response
-```
-</details>
-
-### 3️⃣ Design (`design.md`)
-
-**Capture technical decisions**, architecture notes, and trade-offs.
-
-<details>
-<summary>📄 Example Design</summary>
-
-```markdown
-## Technical Approach
-- Use jsonwebtoken library (already in dependencies)
-- Store hashed passwords with bcrypt (existing pattern)
-- JWT payload: { userId, email, exp }
-
-## Alternatives Considered
-- Session-based auth: Rejected due to stateless requirement
-- OAuth only: Deferred to future iteration
-
-## Security Considerations
-- Passwords hashed with bcrypt (cost factor 10)
-- No sensitive data in JWT payload
-- HTTPS required (enforced by middleware)
-```
-</details>
-
-### 4️⃣ Tasks (`tasks.md`)
-
-**Break implementation into small, numbered items:**
-
-<details>
-<summary>✅ Example Tasks</summary>
-
-```markdown
-- [x] 1.1 Create auth controller
-- [x] 1.2 Add login route
-- [ ] 2.1 Implement JWT signing
-- [ ] 2.2 Create auth middleware
-- [ ] 3.1 Add integration tests
-- [ ] 3.2 Update API documentation
-```
-</details>
-
-## ✅ Definition of Done
-
-Before moving a change from `.docs/doing/` to `.docs/done/`:
-
-- ✅ All tasks are complete or explicitly deferred
-- ✅ Code matches requirements and scenarios
-- ✅ Relevant tests pass (except pure UI tweaks)
-- ✅ Design notes reflect final decisions
-- ✅ Completion summary recorded (what changed, risks, follow-ups)
-
----
-
-## 🤖 Working with AI Agents
-
-Firehose is designed for smooth human-AI collaboration:
-
-**For Humans:**
-1. Point your AI agent to `FIREHOSE.md` at the start of each session
-2. Create a change folder in `.docs/doing/` for new work
-3. Let the AI implement following the documented requirements
-4. Review changes against specs for alignment
-
-**For AI Agents:**
-- 📖 Read and follow `FIREHOSE.md` before making edits
-- 💬 Keep responses plain and direct
-- 🤔 If impact is unclear, present 2-3 options first
-- 🔁 Work in tight loops: discuss → implement → test → refine
-- 🎯 Prefer minimal blast radius and reversible diffs
-
----
-
-## 🚀 Getting Started
-
-### Option 1: New Project
-```bash
-# Clone the Firehose template
-git clone https://github.com/DCCA/firehose.git my-project
-cd my-project
-
-# Set up your project structure
-mkdir -p .docs/{todo,doing,done}
-echo "# My Project PRD" > .docs/PRD.md
-
-# Start your first change
-mkdir -p .docs/doing/initial-setup
-```
-
-### Option 2: Existing Project
-```bash
-# Add Firehose to your existing repository
-cd your-project
-mkdir -p .docs/{todo,doing,done}
-
-# Download the Firehose principles
-curl -o FIREHOSE.md https://raw.githubusercontent.com/DCCA/firehose/main/FIREHOSE.md
-
-# Commit the structure
-git add .docs/ FIREHOSE.md
-git commit -m "Add Firehose workflow"
-```
-
-### Next Steps
-1. Create `.docs/PRD.md` with your product goals
-2. Add your first change to `.docs/doing/`
-3. Follow the Change Lifecycle for implementation
-
----
-
-## 🤝 Contributing
-
-We welcome contributions! Here's how:
-
-1. **Open or create a change** in `.docs/doing/`
-2. **Keep artifacts and implementation in sync**
-3. **Submit focused PRs** with clear scope
-4. **Include tests** when behavior changes
-
-Before submitting:
-- Ensure your change follows the Firehose workflow
-- Update documentation if you modify the process
-- Test your changes thoroughly
-
----
-
-## 📊 Project Status
+## 📊 Repository Status
 
 **Current Phase:** Foundation & Governance
 
-This repository currently defines the process and governance baseline. Implementation-specific modules can be added incrementally under the same workflow.
+This repository is currently focused on process and governance documentation. Product/application code is expected to live in downstream repos that adopt Firehose.
 
 ### Roadmap
 - ✅ Core Firehose principles established
