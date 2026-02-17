@@ -279,9 +279,11 @@ This repository currently defines the process and governance baseline. Implement
 ### Roadmap
 - ✅ Core Firehose principles established
 - ✅ Documentation structure defined
-- 🚧 Example projects and templates
-- 📋 CLI tools for workflow automation
-- 📋 Integration with popular AI coding tools
+- 🚧 Example projects and templates (in progress)
+- 📋 CLI tools for workflow automation (planned)
+- 📋 Integration with popular AI coding tools (planned)
+
+**Legend:** ✅ Complete · 🚧 In Progress · 📋 Planned
 
 ---
 
@@ -308,7 +310,9 @@ Firehose aims to be the **minimum viable structure** for building with AI agents
 
 ## 📝 License
 
-This project is released into the public domain. Use it however you'd like!
+[MIT License](LICENSE) - Free to use, modify, and distribute.
+
+This project is open source and available to everyone. See the LICENSE file for full details.
 
 ---
 
