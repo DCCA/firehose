@@ -8,21 +8,22 @@ Firehose is a lightweight, spec-driven workflow that keeps AI coding agents alig
 
 ## ⚡ Quick Start
 
+**Want to try Firehose?** Choose your path:
+
+- **🆕 New project?** Clone this repo as a template (see [Getting Started](#-getting-started))
+- **📦 Existing project?** Add Firehose in 30 seconds:
+
 ```bash
-# 1. Add Firehose to your project
+# Add Firehose to your existing project
 mkdir -p .docs/{todo,doing,done}
 curl -o FIREHOSE.md https://raw.githubusercontent.com/DCCA/firehose/main/FIREHOSE.md
 
-# 2. Create your first change
-mkdir -p .docs/doing/my-feature
-cd .docs/doing/my-feature
+# Create your first change
+mkdir -p .docs/doing/my-feature && cd .docs/doing/my-feature
+echo "## Intent\nSolve X problem..." > proposal.md
+echo "## Tasks\n- [ ] 1.1 First task..." > tasks.md
 
-# 3. Define your change
-echo "## Intent\nAdd user authentication..." > proposal.md
-echo "## Tasks\n- [ ] 1.1 Create login endpoint..." > tasks.md
-
-# 4. Let AI implement following Firehose principles
-# Point your AI agent to FIREHOSE.md and let it work!
+# Point your AI agent to FIREHOSE.md and start building!
 ```
 
 ---
