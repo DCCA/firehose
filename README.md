@@ -31,13 +31,10 @@ curl -fsSL https://raw.githubusercontent.com/DCCA/firehose/main/FIREHOSE.md -o F
 
 # 2) 🤖 Ask your AI agent to scaffold docs + your first change
 # Prompt example:
-# "Read FIREHOSE.md and create .docs/{todo,doing,done},
-# .docs/PRD.md, and .docs/doing/my-first-change/
-# with proposal.md, spec.md, design.md, and tasks.md."
+ "Read FIREHOSE.md"
 ```
 
 Then ask your AI agent to read `FIREHOSE.md` before making changes. 🤖
-
 If you're using this repo directly, Step 2 is already done. ✅
 
 ---
@@ -94,24 +91,6 @@ This is the **recommended structure inside a project using Firehose**:
     └── done/                    # ✅ Completed changes with history
 ```
 
-
-## 📊 Repository Status
-
-**Current Phase:** Foundation & Governance
-
-This repository is currently focused on process and governance documentation. Product/application code is expected to live in downstream repos that adopt Firehose.
-
-### Roadmap
-- ✅ Core Firehose principles established
-- ✅ Documentation structure defined
-- 🚧 Example projects and templates (in progress)
-- 📋 CLI tools for workflow automation (planned)
-- 📋 Integration with popular AI coding tools (planned)
-
-**Legend:** ✅ Complete · 🚧 In Progress · 📋 Planned
-
----
-
 ## 💡 Philosophy
 
 > "The best process is the one you'll actually follow."
@@ -142,9 +121,6 @@ This project is open source and available to everyone. See the LICENSE file for 
 ---
 
 <div align="center">
-
 **Built with ❤️ for the AI-augmented software development era**
-
-[⭐ Star this repo](https://github.com/DCCA/firehose) · [🐛 Report Bug](https://github.com/DCCA/firehose/issues) · [💡 Request Feature](https://github.com/DCCA/firehose/issues)
-
+[⭐ Star this repo](https://github.com/DCCA/firehose)
 </div>
