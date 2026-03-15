@@ -70,15 +70,61 @@ The system SHALL ...
 - Add concise comments only where intent is non-obvious.
 - Use test-driven development when practical.
 
-## Verification & Done Criteria
+## Development Lifecycle Loops
 
-Before moving a change from `.docs/doing/` to `.docs/done/`:
+Every change moves through three loops. Each loop is short and repeatable — exit when the gate criteria are met, not when time runs out.
 
-- All planned tasks are complete or explicitly deferred.
+### Loop 1: Scope (before code)
+
+```
+┌─→ Clarify intent with user
+│   Write/update proposal.md + tasks.md
+│   Check: Is scope small enough for one reviewable diff?
+│   Check: Are requirements testable (Given/When/Then)?
+└── If no → narrow scope or split into multiple changes
+```
+
+**Gate:** proposal.md and tasks.md exist, scope is clear, user agrees.
+
+### Loop 2: Build (during code)
+
+```
+┌─→ Pick next unchecked task from tasks.md
+│   Write a failing test (when practical)
+│   Implement the smallest change that passes
+│   Run tests / linter / type-check
+│   ✓ Mark task complete in tasks.md
+└── If tasks remain → repeat
+```
+
+**Gate:** All tasks checked off, tests pass, no lint/type errors.
+
+Keep each iteration small — if a task takes more than a few minutes, break it down further. Commit after each meaningful increment.
+
+### Loop 3: Verify (before done)
+
+```
+┌─→ Re-read spec.md scenarios against implementation
+│   Run full test suite
+│   Review diff for unintended changes
+│   Update design.md with final technical decisions
+│   Write completion summary (what changed, risks, follow-ups)
+└── If gaps found → return to Loop 2
+```
+
+**Gate:** All of the following are true:
 - Implementation matches requirements and scenarios.
-- Relevant tests are added/updated and pass (except pure UI tweaks where agreed).
-- Design notes reflect final technical decisions.
-- A short completion summary is added (what changed, risks, follow-ups).
+- Relevant tests are added/updated and pass.
+- Design notes reflect final decisions.
+- Completion summary is written.
+- Change folder moves from `.docs/doing/` to `.docs/done/`.
+
+### When loops stall
+
+If any loop is stuck for more than two iterations without progress:
+- Stop and surface the blocker to the user.
+- Present 2–3 concrete options (not open-ended questions).
+- Do not continue building on an uncertain foundation.
 
 ## Git
 
@@ -97,7 +143,7 @@ Before moving a change from `.docs/doing/` to `.docs/done/`:
 
 - Use plain, direct language.
 - Avoid prompt theater and over-engineered instructions.
-- If impact is unclear, present 2-3 options before changing code.
-- Work in short loops: discuss → implement → test → refine.
+- If impact is unclear, present 2–3 options before changing code.
+- Follow the three lifecycle loops (Scope → Build → Verify) for every non-trivial change.
 - If work runs long, stop and provide a status update.
 - Preserve intent with concise, high-signal notes.
