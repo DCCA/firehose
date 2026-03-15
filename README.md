@@ -26,16 +26,19 @@ The canonical Firehose docs and reference setup:
 Use this when you want to adopt **the Firehose method in another repo**.
 
 ```bash
-# 1) 📜 Add Firehose principles to your repo root
+# 1) Add Firehose principles to your repo
 curl -fsSL https://raw.githubusercontent.com/DCCA/firehose/main/FIREHOSE.md -o FIREHOSE.md
 
-# 2) 🤖 Ask your AI agent to scaffold docs + your first change
-# Prompt example:
- "Read FIREHOSE.md"
+# 2) Copy the templates into your project
+mkdir -p .docs/templates .docs/todo .docs/doing .docs/done
+curl -fsSL https://raw.githubusercontent.com/DCCA/firehose/main/.docs/templates/{proposal,spec,design,tasks,completion,PRD}.md \
+  -o ".docs/templates/#1.md"
+
+# 3) Tell your AI agent to read the rules
+# Prompt: "Read FIREHOSE.md before making any changes."
 ```
 
-Then ask your AI agent to read `FIREHOSE.md` before making changes. 🤖
-If you're using this repo directly, Step 2 is already done. ✅
+That's it. Your agent now knows the workflow: **Scope → Build → Verify**.
 
 ---
 
@@ -65,42 +68,63 @@ Firehose provides structure without bureaucracy:
 - **📊 Maintain audit trail** of what changed and why
 - **🤝 Enable collaboration** between multiple AI agents or developers
 
-## 🏗️ Core Approach
+## 🔁 How It Works
 
-Firehose follows an **OpenSpec-lite** model—practical, not prescriptive:
+Every change follows three loops. Each one is short — you repeat it until the exit condition is met.
 
 ```
-📝 Fluid, not rigid       → Update docs as understanding evolves
-🔁 Iterative, not waterfall → Refine while implementing
-🏭 Brownfield-first       → Describe deltas to existing behavior
-🎯 One unit per change    → Avoid mixed-scope work
+  Scope              Build                Verify
+  ─────              ─────                ──────
+  Clarify intent     Pick a task          Check against spec
+  Write proposal     Write test           Run full test suite
+  Break into tasks   Implement            Review diff
+  User agrees? ──→   Checks pass? ──→     Matches intent? ──→ Done
+       ↑  no              ↑  no                ↑  no
+       └──────┘           └──────┘             └──→ back to Build
 ```
+
+**Scope** → Make sure you know what you're building and it fits in one diff.
+**Build** → Work through tasks one at a time: test, implement, check, commit.
+**Verify** → Confirm the result matches the plan. Write a completion summary. Ship it.
+
+See [FIREHOSE.md](FIREHOSE.md) for the full lifecycle loop details and gate criteria.
 
 ## 📁 Project Structure
 
-This is the **recommended structure inside a project using Firehose**:
+When you adopt Firehose in a project, you get this structure:
 
 ```text
 .
-├── README.md                    # You are here
-├── FIREHOSE.md                  # Operating principles and rules
-└── .docs/                       # Source-of-truth documentation
-    ├── PRD.md                   # Product goals, constraints, non-goals
-    ├── todo/                    # 💡 Proposed changes (not started)
-    ├── doing/                   # 🚧 Active changes
-    └── done/                    # ✅ Completed changes with history
+├── FIREHOSE.md                  # Rules your AI agent reads before working
+└── .docs/
+    ├── PRD.md                   # What this project is and isn't
+    ├── templates/               # Starting-point docs (copy into change folders)
+    │   ├── proposal.md
+    │   ├── spec.md
+    │   ├── design.md
+    │   ├── tasks.md
+    │   └── completion.md
+    ├── todo/                    # Proposed changes (not started)
+    ├── doing/                   # Active changes (one folder per change)
+    │   └── add-user-search/     # Example change folder
+    │       ├── proposal.md
+    │       ├── tasks.md
+    │       └── spec.md
+    └── done/                    # Completed changes with history
 ```
+
+Each change gets its own folder that moves through `todo/` → `doing/` → `done/`.
 
 ## 💡 Philosophy
 
 > "The best process is the one you'll actually follow."
 
-Firehose aims to be the **minimum viable structure** for building with AI agents. It's:
+Firehose is the **minimum viable structure** for building with AI agents:
 
-- **Lightweight**: Just documentation and conventions
-- **Flexible**: Adapt to your project's needs
-- **Practical**: Based on real experience with AI coding
-- **Open**: Not tied to any specific tool or platform
+- **Lightweight** — just markdown files and conventions
+- **Flexible** — adapt to your project's needs
+- **Practical** — based on real experience with AI coding
+- **Open** — not tied to any specific tool or platform
 
 ---
 
