@@ -18,21 +18,23 @@ They are non-negotiable unless the user explicitly approves a change.
 - Do **not** add `.docs/` to `.gitignore`; this folder is part of project source-of-truth.
 - If needed, ignore only ephemeral paths (for example `.docs/tmp/`, `.docs/.cache/`, `.docs/drafts/`).
 
-### Suggested structure
+### Structure
 
 - `.docs/PRD.md` → product intent and scope.
+- `.docs/templates/` → starting-point documents (copy into change folders).
 - `.docs/todo/` → proposed changes not started.
 - `.docs/doing/` → active changes.
 - `.docs/done/` → completed changes with full history.
 
-For each change, create one folder:
+For each change, create one folder and copy the templates you need:
 
 ```text
 .docs/doing/<change-name>/
-	proposal.md   # why + scope
-	spec.md       # requirements + scenarios (what)
-	design.md     # technical approach (how)
-	tasks.md      # checklist (execution)
+	proposal.md   # why + scope (always required)
+	tasks.md      # checklist (always required)
+	spec.md       # requirements + scenarios (for complex changes)
+	design.md     # technical approach (fill in during/after build)
+	completion.md # summary (fill in when done)
 ```
 
 ## Planning & Spec Rules
@@ -74,57 +76,74 @@ The system SHALL ...
 
 Every change moves through three loops. Each loop is short and repeatable — exit when the gate criteria are met, not when time runs out.
 
+Templates for all documents live in `.docs/templates/`. Copy them into your change folder and fill them in.
+
 ### Loop 1: Scope (before code)
 
-```
-┌─→ Clarify intent with user
-│   Write/update proposal.md + tasks.md
-│   Check: Is scope small enough for one reviewable diff?
-│   Check: Are requirements testable (Given/When/Then)?
-└── If no → narrow scope or split into multiple changes
-```
+1. Ask the user what they want to achieve (or read their request carefully).
+2. Create a change folder: `.docs/doing/<change-name>/`.
+3. Copy `.docs/templates/proposal.md` → fill in Why, Scope, Out of Scope, and Success Criteria.
+4. Copy `.docs/templates/tasks.md` → break the work into small, checkable tasks.
+5. If requirements are complex, copy `.docs/templates/spec.md` → write testable scenarios.
+6. Review with the user: is the scope small enough for one reviewable diff?
 
-**Gate:** proposal.md and tasks.md exist, scope is clear, user agrees.
+**Gate:** proposal.md and tasks.md exist in the change folder, user agrees with scope.
+
+**If scope is too large:** split into multiple change folders. Each one should be independently shippable.
 
 ### Loop 2: Build (during code)
 
-```
-┌─→ Pick next unchecked task from tasks.md
-│   Write a failing test (when practical)
-│   Implement the smallest change that passes
-│   Run tests / linter / type-check
-│   ✓ Mark task complete in tasks.md
-└── If tasks remain → repeat
-```
+For each unchecked task in tasks.md:
 
-**Gate:** All tasks checked off, tests pass, no lint/type errors.
+1. Write a failing test (when the project has tests).
+2. Implement the smallest change that makes it pass.
+3. Run the project's checks (tests, linter, type-checker — whatever exists).
+4. Check off the task in tasks.md.
+5. Commit with a clear message describing what changed.
 
-Keep each iteration small — if a task takes more than a few minutes, break it down further. Commit after each meaningful increment.
+Repeat until all tasks are checked off.
+
+**Gate:** All tasks complete, all checks pass.
+
+**If a task is bigger than expected:** stop, break it into subtasks in tasks.md (e.g., 3.1, 3.2), then continue.
 
 ### Loop 3: Verify (before done)
 
-```
-┌─→ Re-read spec.md scenarios against implementation
-│   Run full test suite
-│   Review diff for unintended changes
-│   Update design.md with final technical decisions
-│   Write completion summary (what changed, risks, follow-ups)
-└── If gaps found → return to Loop 2
-```
+1. Re-read proposal.md — does the implementation match the original intent?
+2. If spec.md exists, walk through each scenario against the actual behavior.
+3. Run the full test suite one final time.
+4. Review the diff — look for unintended changes, leftover debug code, or scope creep.
+5. Update `.docs/templates/design.md` → copy into change folder with final technical decisions.
+6. Write `completion.md` in the change folder (what changed, how to verify, risks/follow-ups).
+7. Move the change folder from `.docs/doing/` to `.docs/done/`.
 
 **Gate:** All of the following are true:
-- Implementation matches requirements and scenarios.
-- Relevant tests are added/updated and pass.
-- Design notes reflect final decisions.
-- Completion summary is written.
-- Change folder moves from `.docs/doing/` to `.docs/done/`.
+- Implementation matches proposal and spec.
+- All tests pass.
+- completion.md is written.
+- Change folder is in `.docs/done/`.
+
+**If gaps are found:** return to Loop 2. Do not move to done with known issues.
 
 ### When loops stall
 
 If any loop is stuck for more than two iterations without progress:
-- Stop and surface the blocker to the user.
+- Stop and tell the user what is blocking you.
 - Present 2–3 concrete options (not open-ended questions).
 - Do not continue building on an uncertain foundation.
+
+### Example: what a change folder looks like
+
+A real change folder after completion might look like this:
+
+```text
+.docs/done/add-user-search/
+    proposal.md        # "Add search-by-email to the users API"
+    tasks.md           # 4 tasks, all checked off
+    spec.md            # 2 requirements, 5 scenarios
+    design.md          # "Added GET /users?email= endpoint, reused existing query builder"
+    completion.md      # "Shipped in commit abc123. Risk: no rate limiting yet."
+```
 
 ## Git
 
