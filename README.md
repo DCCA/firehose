@@ -2,7 +2,9 @@
 
 **Build better software with AI agents—no more drift between plan and code.**
 
-Firehose is a lightweight, spec-driven workflow that keeps AI coding agents aligned with your intent. It treats project documentation as a first-class source of truth, ensuring every change is traceable, reviewable, and reversible.
+Firehose is a lightweight, spec-driven workflow that keeps AI coding agents aligned with product intent. It treats project documentation as a first-class source of truth so every change is scoped, traceable, reviewable, and reversible.
+
+It is designed for product builders, PMs, engineers, and AI agents working together on real repositories where vague prompts are not enough.
 
 ## 🧭 What This Is
 
@@ -52,7 +54,7 @@ AI coding agents are powerful, but they often:
 - Mix multiple concerns in a single change
 
 ### The Solution
-Firehose provides structure without bureaucracy:
+Firehose provides just enough product/process structure to make AI-assisted work professional-grade:
 
 | Traditional Approach | Firehose Approach |
 |---------------------|-------------------|
@@ -67,6 +69,7 @@ Firehose provides structure without bureaucracy:
 - **🧠 Preserve intent** across sessions for humans and AI
 - **📊 Maintain audit trail** of what changed and why
 - **🤝 Enable collaboration** between multiple AI agents or developers
+- **✅ Make product decisions inspectable** instead of hidden inside chat history
 
 ## 🔁 How It Works
 
