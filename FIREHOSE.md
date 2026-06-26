@@ -115,6 +115,8 @@ Repeat until all tasks are checked off.
 
 **If a task is bigger than expected:** stop, break it into subtasks in tasks.md (e.g., 3.1, 3.2), then continue.
 
+### Loop 3: Verify (before done)
+
 Verify with a **fresh perspective**, not the author re-reading their own work.
 The author already believes the work is correct — that's why it passed Build.
 The characteristic failure of fast agents is confident, plausible code that

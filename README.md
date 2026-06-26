@@ -122,6 +122,7 @@ When you adopt Firehose in a project, you get this structure:
 └── .docs/
     ├── PRD.md                   # What this project is and isn't
     ├── templates/               # Starting-point docs (copy into change folders)
+    │   ├── PRD.md
     │   ├── proposal.md
     │   ├── spec.md
     │   ├── design.md
