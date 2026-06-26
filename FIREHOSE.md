@@ -2,13 +2,21 @@
 These are the operating rules for this project.
 They are non-negotiable unless the user explicitly approves a change.
 
-## Core Philosophy (OpenSpec-lite)
+## Core Philosophy
+
+Firehose is the **minimum viable** spec-driven workflow: deliberately lighter than
+heavyweight spec frameworks, deliberately tool-agnostic (no required platform,
+plugin, or vendor), and deliberately brownfield-first. It adds structure only
+where fast agents need it — pinning down intent and verifying against it — and
+stays out of the way everywhere else.
 
 - Be fluid, not rigid: update plan/spec/tasks as you learn.
 - Be iterative, not waterfall: refine intent during implementation.
 - Be easy, not complex: choose the simplest process that preserves clarity.
 - Be brownfield-first: describe deltas to existing behavior, not full rewrites.
 - Keep one logical unit of work per change.
+- Don't re-teach the harness: let the agent run tests, review diffs, and commit;
+  Firehose owns scope and independent verification.
 
 ## .docs
 
@@ -107,18 +115,27 @@ Repeat until all tasks are checked off.
 
 **If a task is bigger than expected:** stop, break it into subtasks in tasks.md (e.g., 3.1, 3.2), then continue.
 
-### Loop 3: Verify (before done)
+Verify with a **fresh perspective**, not the author re-reading their own work.
+The author already believes the work is correct — that's why it passed Build.
+The characteristic failure of fast agents is confident, plausible code that
+passes its own tests but misses the intent. Catching that needs an independent
+check, ideally a different agent (or human) than the one who built it, prompted
+to *find the gap*, not to confirm success.
 
-1. Re-read proposal.md — does the implementation match the original intent?
-2. If spec.md exists, walk through each scenario against the actual behavior.
-3. Run the full test suite one final time.
+1. Independently check the implementation against proposal.md — does it match
+   the *original intent*, including what was declared Out of Scope? Try to
+   refute "this is done," don't assume it.
+2. If spec.md exists, walk through each scenario against the actual behavior —
+   especially the edge cases and failure paths.
+3. Run the full test suite one final time. Be skeptical of tests written by the
+   same agent that wrote the code; spot-check that they assert real behavior.
 4. Review the diff — look for unintended changes, leftover debug code, or scope creep.
 5. Update `.docs/templates/design.md` → copy into change folder with final technical decisions.
 6. Write `completion.md` in the change folder (what changed, how to verify, risks/follow-ups).
 7. Move the change folder from `.docs/doing/` to `.docs/done/`.
 
 **Gate:** All of the following are true:
-- Implementation matches proposal and spec.
+- Implementation matches proposal and spec, confirmed by an independent check (not just the author).
 - All tests pass.
 - completion.md is written.
 - Change folder is in `.docs/done/`.
@@ -166,3 +183,24 @@ A real change folder after completion might look like this:
 - Follow the three lifecycle loops (Scope → Build → Verify) for every non-trivial change.
 - If work runs long, stop and provide a status update.
 - Preserve intent with concise, high-signal notes.
+
+### Multiple agents
+
+Agents are increasingly run in parallel — several at once, some in the
+background, alongside human contributors. Firehose stays sane under that load
+when these rules hold:
+
+- **The spec is the shared source of truth.** When agents disagree with each
+  other or with the code, the spec wins. Change the spec deliberately as its own
+  decision — never as a silent side effect of a build.
+- **One change folder per unit of work.** Each agent or task owns its own
+  `.docs/doing/<change-name>/`. Parallel agents must not edit the same change
+  folder or the same code files at once; if scopes overlap, split or sequence
+  them.
+- **Intent lives in the repo, not the chat.** Write enough in the change folder
+  that another agent or human can pick it up cold, without replaying your
+  conversation.
+- **Verification crosses agent boundaries.** Prefer that work built by one agent
+  is verified by another (see Loop 3). Self-verification is the weakest check.
+- **Coordinate through artifacts, not assumptions.** If a change depends on
+  another in-flight change, say so in its proposal; don't assume ordering.
