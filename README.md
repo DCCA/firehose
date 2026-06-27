@@ -6,6 +6,17 @@ Firehose is a lightweight, spec-driven workflow that keeps AI coding agents alig
 
 It is designed for product builders, PMs, engineers, and AI agents working together on real repositories where vague prompts are not enough.
 
+## Review first
+
+If you are evaluating Firehose, start here:
+
+1. **[`FIREHOSE.md`](FIREHOSE.md)** — the operating manual agents should load before changing a repo.
+2. **[Quick Start](#-quick-start)** — the smallest adoption path for a new or existing project.
+3. **[How It Works](#-how-it-works)** — the Scope → Build → Verify loop and exit criteria.
+4. **[`CHANGELOG.md`](CHANGELOG.md)** — recent updates and why the workflow changed.
+
+**Current status:** Firehose is intentionally lightweight and docs-first. The repository is the canonical method/reference scaffold; production adoption happens by copying the operating file and `.docs/` conventions into another repo, then validating changes inside that target repo's own tests and review process.
+
 ## 🧭 What This Is
 
 ### 🔥 Firehose (the method)
