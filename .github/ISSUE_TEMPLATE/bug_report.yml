@@ -1,0 +1,29 @@
+name: 🐞 Problem report
+description: Report a broken link, error, or confusing part of the docs/templates
+title: "[problem]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for helping improve Firehose! Please describe the problem clearly.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What's the problem?
+      description: What did you read or try, and what was wrong or confusing?
+      placeholder: e.g. The Quick Start curl command failed because...
+    validations:
+      required: true
+  - type: input
+    id: location
+    attributes:
+      label: Where is it?
+      description: File and section (e.g. README.md → Quick Start), or a link.
+    validations:
+      required: false
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect instead?
+    validations:
+      required: false
