@@ -155,6 +155,7 @@ Firehose is the **minimum viable structure** for building with AI agents:
 ## 📚 Learn More
 
 - **[FIREHOSE.md](FIREHOSE.md)** - Detailed operating principles
+- **[CHANGELOG.md](CHANGELOG.md)** - What's changed and why
 - **Examples** - Coming soon
 - **Discussions** - Share your experience with Firehose
 
