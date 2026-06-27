@@ -1,0 +1,31 @@
+name: 💡 Proposal / idea
+description: Suggest an improvement to the Firehose method, docs, or templates
+title: "[proposal]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Firehose starts every change with a short proposal. This issue is your
+        Scope step — describe the why and the rough shape, not a full design.
+  - type: textarea
+    id: why
+    attributes:
+      label: Why
+      description: What problem does this solve? Why now?
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What would change
+      description: Roughly what docs/templates/behaviors would this touch?
+    validations:
+      required: true
+  - type: textarea
+    id: out-of-scope
+    attributes:
+      label: Out of scope (optional)
+      description: Anything you explicitly do NOT want this to become.
+    validations:
+      required: false

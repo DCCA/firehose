@@ -1,5 +1,9 @@
 # 🔥 Firehose
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+[![Changelog](https://img.shields.io/badge/changelog-keep%20a%20changelog-orange.svg)](CHANGELOG.md)
+
 **Build better software with AI agents—no more drift between plan and code.**
 
 Firehose is a lightweight, spec-driven workflow that keeps AI coding agents aligned with product intent. It treats project documentation as a first-class source of truth so every change is scoped, traceable, reviewable, and reversible.

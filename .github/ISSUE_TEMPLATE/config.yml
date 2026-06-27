@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 💬 Discussions
+    url: https://github.com/DCCA/firehose/discussions
+    about: Share how you use Firehose, ask questions, or propose bigger ideas.

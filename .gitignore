@@ -1,0 +1,20 @@
+# Ephemeral Firehose paths (see FIREHOSE.md) — keep .docs/ itself tracked.
+.docs/tmp/
+.docs/.cache/
+.docs/drafts/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs and temp
+*.log
+*.tmp
