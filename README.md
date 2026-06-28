@@ -10,6 +10,8 @@ Firehose is a lightweight, spec-driven workflow that keeps AI coding agents alig
 
 It is designed for product builders, PMs, engineers, and AI agents working together on real repositories where vague prompts are not enough.
 
+> **Need this as a product/platform?** Firehose is the lightweight method. [Burrow](https://github.com/DCCA/burrow) is the productized platform for the same discipline: repo-native briefs, lifecycle, sign-offs, agent context export, MCP, and integrations. Firehose teaches the workflow; Burrow operationalizes it.
+
 ## Review first
 
 If you are evaluating Firehose, start here:
